@@ -4,9 +4,12 @@ from models import Book
 
 
 def load_books(filepath: str = "books.json") -> List[Book]:
-    with open(filepath, "r", encoding="utf-8") as f:
-        data = json.load(f)
-        return [Book.from_dict(item) for item in data]
+    try:
+        with open(filepath, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            return [Book.from_dict(item) for item in data]
+    except FileNotFoundError:
+        return []
 
 
 def save_books(books: List[Book], filepath: str = "books.json"):
